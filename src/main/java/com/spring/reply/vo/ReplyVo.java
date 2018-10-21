@@ -6,6 +6,14 @@ public class ReplyVo {
 	private String  nickname;
 	private String	content;
 	private String  date;	
+	private String  thumbnail;
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 	public String getReply_id() {
 		return reply_id;
 	}
@@ -37,12 +45,15 @@ public class ReplyVo {
 		this.date = date;
 	}
 
-	public ReplyVo(String reply_id, String board_id, String nickname, String content, String date) {
+	
+	public ReplyVo(String reply_id, String board_id, String nickname, String content, String date, String thumbnail) {
+		super();
 		this.reply_id = reply_id;
 		this.board_id = board_id;
 		this.nickname = nickname;
 		this.content = content;
 		this.date = date;
+		this.thumbnail = thumbnail;
 	}
 	@Override
 	public String toString() {

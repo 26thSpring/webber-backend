@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.error.NotExsistExcpetion;
 import com.spring.result.vo.ResultLogInVo;
 import com.spring.result.vo.ResultMsgVo;
+import com.spring.template.service.TemplateService;
+import com.spring.template.vo.TemplateVo;
 import com.spring.user.service.UserService;
 import com.spring.user.vo.UserVo;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TemplateService templateService;
 	//전체 유저 리스트
 	@RequestMapping(method=RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public List<UserVo> getList(@RequestBody HashMap<String,Object> map){
@@ -37,12 +44,17 @@ public class UserController {
 	}
 	//선택한 유저
 	@RequestMapping(value="/{nickname}",method=RequestMethod.GET,produces = "application/json; charset=utf-8")
-	public UserVo getUser(@PathVariable("nickname") String nickname,@RequestBody HashMap<String,Object> map) {
+	public UserVo getUser(@PathVariable("nickname") String nickname, HashMap<String,Object> map) {
 		map.put("nickname", nickname);
 		UserVo user=userService.getUser(map);
 		if(user==null) {
 			throw new NotExsistExcpetion("Not Exsist/-1");
 		}
+		map.put("getNickname", nickname);
+		System.out.println("리스트 불러오기 전"+map);
+		List<TemplateVo> list=templateService.getCheckUserTemplate(map);
+		System.out.println("리스트 불러온 후"+map);
+		user.setTemplateList(list);
 		return user;
 	}
 	//유저 정보수정

@@ -33,7 +33,7 @@ public class TokenServiceImpl implements TokenService {
 		//System.out.println("erawerawerawerawerawer");
 		   Calendar cal=Calendar.getInstance();
 		   cal.setTime(new Date());
-		   		
+		   cal.add(Calendar.DATE, 7);		
 	       Date d = cal.getTime();
 	       UserVo keyUser=new UserVo();
 	       keyUser.setNickname(uservo.getNickname());

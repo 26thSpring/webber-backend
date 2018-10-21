@@ -22,4 +22,6 @@ public interface TemplateService {
 	void inDelLike(HashMap<String, Object> map);
 
 	void inDelFavor(HashMap<String, Object> map);
+
+	List<TemplateVo> getCheckUserTemplate(HashMap<String, Object> map);
 }

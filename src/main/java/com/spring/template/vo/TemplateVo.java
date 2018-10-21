@@ -10,15 +10,23 @@ public class TemplateVo {
 	private String file_name;
 	private String file_path_html;
 	private String file_path_css;
-	private String thumbnail;
+	private String Tthumbnail;
 	private String htmlContent;
 	private String cssContent;
 	private int views;
 	private int likes;
 	private String regdate;
 	private int favor;
+	private int replyNum;
+	private String thumbnail;
 	private List<ReplyVo> replies;
-
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 	public String getHtmlContent() {
 		return htmlContent;
 	}
@@ -61,11 +69,12 @@ public class TemplateVo {
 	public void setFile_path_css(String file_path_css) {
 		this.file_path_css = file_path_css;
 	}
-	public String getThumbnail() {
-		return thumbnail;
+	
+	public String getTthumbnail() {
+		return Tthumbnail;
 	}
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setTthumbnail(String tthumbnail) {
+		Tthumbnail = tthumbnail;
 	}
 	public int getViews() {
 		return views;
@@ -98,22 +107,34 @@ public class TemplateVo {
 		this.replies = replies;
 	}
 	
+	public int getReplyNum() {
+		return replyNum;
+	}
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
+	}
 	public TemplateVo() {
 	}
 	public TemplateVo(String template_id, String nickname, String file_name, String file_path_html,
-			String file_path_css, String thumbnail, int views, int likes, String regdate, int favor,
-			List<ReplyVo> replies) {
+			String file_path_css, String tthumbnail, String htmlContent, String cssContent, int views, int likes,
+			String regdate, int favor, int replyNum, String thumbnail, List<ReplyVo> replies) {
 		this.template_id = template_id;
 		this.nickname = nickname;
 		this.file_name = file_name;
 		this.file_path_html = file_path_html;
 		this.file_path_css = file_path_css;
-		this.thumbnail = thumbnail;
+		Tthumbnail = tthumbnail;
+		this.htmlContent = htmlContent;
+		this.cssContent = cssContent;
 		this.views = views;
 		this.likes = likes;
 		this.regdate = regdate;
 		this.favor = favor;
+		this.replyNum = replyNum;
+		this.thumbnail = thumbnail;
 		this.replies = replies;
 	}
+
+	
 
 }

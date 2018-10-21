@@ -1,5 +1,6 @@
 package com.spring.board.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,17 +38,20 @@ public class BoardRestController {
 	//선택한 게시물 및 댓글 리스트 가져오기
 	@RequestMapping(value="/{board_id}",method=RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public BoardVo getBoardVo(		 
-			 @PathVariable("board_id") String board_id,@RequestBody HashMap<String,Object>map){
+			 @PathVariable("board_id") String board_id, HashMap<String,Object>map){
 		map.put("board_id", board_id);
+		//System.out.println(board_id);
 		BoardVo board=boardService.getBoardVo(map);
 		if(board==null) {
 			throw new NotExsistExcpetion("No data Found/-5");
 		}
 		List<ReplyVo>replyList=replyService.getReplyList(map);
 		board.setReplies(replyList);
-/*		System.out.println(replyList.toString());
+		/*System.out.println(replyList.toString());
 		System.out.println(map);
-		System.out.println(board);*/
+		System.out.println(board);
+		System.out.println("ddd"+board);*/
+		
 		return board;
 	}
 	

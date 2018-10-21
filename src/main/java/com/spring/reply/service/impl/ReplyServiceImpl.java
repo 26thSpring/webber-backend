@@ -33,6 +33,7 @@ public class ReplyServiceImpl implements com.spring.reply.service.ReplyService {
 	}
 	@Override
 	public void insertReply(HashMap<String, Object> map) {
+		//String token="eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTM5OTI3NzMwNTAzLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDA1MzI1MzAsIndlYmJlclVzZXIiOnsiZW1haWwiOm51bGwsIm5pY2tuYW1lIjoi7L2U65Sp7ZWY64qU7IKs7J6QIiwidGh1bWJuYWlsIjoiaHR0cDovL2ltZy5hbGljZG4uY29tL2ltZ2V4dHJhL2kzLzQwMzk5ODMxNC9UQjI1SlZ3ak9BS0wxSmpTWkZvWFhhZ0NGWGFfISE0MDM5OTgzMTQuanBnIiwiaW50cm8iOm51bGwsImF1dGgiOjAsImFjY2Vzc1Rva2VuIjpudWxsLCJzb2NpYWxUeXBlIjpudWxsfX0.Tf50w2ejJHsVPpPrtxSpLrsepiuniFd_De8QEUT4AJ8";
 		String token=(String) map.get("access_token");
 		
 		if(tokenService.isUsable(token)) {
@@ -40,6 +41,7 @@ public class ReplyServiceImpl implements com.spring.reply.service.ReplyService {
 			Map<String,Object> userInfo=tokenService.get(token);
 			String nickname=(String) userInfo.get("nickname");
 			map.put("nickname",nickname);
+			System.out.println("fdfasdf"+map);
 			replyDao.insertReply(map);
 			
 			

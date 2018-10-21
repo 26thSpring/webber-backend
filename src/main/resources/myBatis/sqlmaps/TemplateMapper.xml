@@ -9,11 +9,13 @@
 		<result property="file_name"		column="FILE_NAME" 		javaType="String"/>
 		<result property="file_path_html"   column="FILE_PATH_HTML" javaType="String"/>
 		<result property="file_path_css" 	column="FILE_PATH_CSS"  javaType="String"/>
-		<result property="thumbnail" 	    column="THUMBNAIL" 		javaType="String"/>
+		<result property="Tthumbnail" 	    column="TTHUMBNAIL" 	javaType="String"/>
+		<result property="thumbnail" 	    column="THUMBNAIL" 	    javaType="String"/>
 		<result property="views" 	 		column="views" 			javaType="int"/>
 		<result property="regdate" 			column="REGDATE" 		javaType="String"/>
 		<result property="likes" 	 		column="LIKEPOINT" 		javaType="int"/>		
 		<result property="favor" 	 		column="FAVOR" 		 	javaType="int"/>		
+		<result property="replyNum" 	 	column="replyNum" 		javaType="int"/>		
 	</resultMap>
 	<select id="TemplateList" statementType="CALLABLE" parameterType="hashmap"
 	resultType="com.spring.template.vo.TemplateVo">
@@ -36,6 +38,17 @@
 		,#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=TemplateVo}
 	)}
 	</select>
+	
+	<select id="UserTemplateVo" statementType="CALLABLE"
+      parameterType="hashmap" resultType="com.spring.template.vo.TemplateVo">
+      {Call PKG_WBOARD.PROC_TEMPLATE_NICKNAME_LIST(
+       #{nickname,mode=IN,jdbcType=VARCHAR}
+      ,#{getNickname,mode=IN,jdbcType=VARCHAR}
+      ,#{err_code,mode=OUT,jdbcType=VARCHAR,javaType=String}
+      ,#{err_msg,mode=OUT,jdbcType=VARCHAR,javaType=String}
+      ,#{rrr,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=TemplateVo}
+      )}
+   </select>
 	<insert id="TemplateInsert" statementType="CALLABLE" parameterType="hashmap">
 		{Call PKG_WBOARD.PROC_UPLOAD_FILE(
 		 #{nickname,mode=IN,jdbcType=VARCHAR}

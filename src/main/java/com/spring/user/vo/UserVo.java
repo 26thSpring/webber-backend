@@ -1,5 +1,9 @@
 package com.spring.user.vo;
 
+import java.util.List;
+
+import com.spring.template.vo.TemplateVo;
+
 public class UserVo {
 	//fields
 	private String email;
@@ -9,11 +13,18 @@ public class UserVo {
 	private int     auth;
 	private String  accessToken;
 	private String  socialType;
+	private List<TemplateVo> templateList;
 	
 	//getter&setter
 	
 	public String getSocialType() {
 		return socialType;
+	}
+	public List<TemplateVo> getTemplateList() {
+		return templateList;
+	}
+	public void setTemplateList(List<TemplateVo> templateList) {
+		this.templateList = templateList;
 	}
 	public void setSocialType(String socialType) {
 		this.socialType = socialType;

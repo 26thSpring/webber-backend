@@ -9,6 +9,7 @@
 		<result property="nickname" column="NICKNAME" javaType="String"/>
 		<result property="content" column="CONTENT" javaType="String"/>
 		<result property="date" column="REGDATE" javaType="String"/>
+		<result property="thumbnail" column="thumbnail" javaType="String"/>
 	</resultMap>
 	<select id="ReplyList" statementType="CALLABLE" parameterType="hashmap"
 	resultType="com.spring.reply.vo.ReplyVo">
@@ -22,8 +23,7 @@
 	<select id="ReplyVo" statementType="CALLABLE" parameterType="hashmap"
 	resultType="com.spring.reply.vo.ReplyVo">
 	{Call PKG_WBOARD.PROC_REPLY_CONTENT(
-		 #{board_id,mode=IN,jdbcType=VARCHAR,javaType=String}
-		 ,#{reply_id,mode=IN,jdbcType=VARCHAR,javaType=String}
+		 #{reply_id,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{err_code,mode=OUT,jdbcType=VARCHAR,javaType=String}
 		,#{err_msg,mode=OUT,jdbcType=VARCHAR,javaType=String}
 		,#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=ReplyVo}
@@ -31,7 +31,7 @@
 	</select>
 	<insert id="ReplyInsert" statementType="CALLABLE" parameterType="hashmap" >
 	{Call PKG_WBOARD.PROC_REPLY_WRITE(
-		 #{board_id,mode=IN,jdbcType=VARCHAR,javaType=String}
+		  #{board_id,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{nickname,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{contents,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{err_code,mode=OUT,jdbcType=VARCHAR,javaType=String}
@@ -40,8 +40,7 @@
 	</insert>
 	<update id="ReplyUpdate" statementType="CALLABLE" parameterType="hashmap" >
 	{Call PKG_WBOARD.PROC_REPLY_UPDATE(
-		#{nickname,mode=IN,jdbcType=VARCHAR},
-		 #{board_id,mode=IN,jdbcType=VARCHAR,javaType=String}
+		  #{nickname,mode=IN,jdbcType=VARCHAR}	
 		 ,#{reply_id,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{contents,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{err_code,mode=OUT,jdbcType=VARCHAR,javaType=String}
@@ -50,8 +49,7 @@
 	</update>
 	<delete id="ReplyDelete" statementType="CALLABLE" parameterType="hashmap" >
 	{Call PKG_WBOARD.PROC_REPLY_DELETE(
-		 #{nickname,mode=IN,jdbcType=VARCHAR},
-		  #{board_id,mode=IN,jdbcType=VARCHAR,javaType=String}
+		  #{nickname,mode=IN,jdbcType=VARCHAR}
 		 ,#{reply_id,mode=IN,jdbcType=VARCHAR,javaType=String}
 		 ,#{err_code,mode=OUT,jdbcType=VARCHAR,javaType=String}
 		 ,#{err_msg,mode=OUT,jdbcType=VARCHAR,javaType=String}

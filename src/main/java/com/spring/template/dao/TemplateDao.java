@@ -21,4 +21,6 @@ public interface TemplateDao {
 
 	void indelFavor(HashMap<String, Object> map);
 
+	List<TemplateVo> getCheckUserTemplate(HashMap<String, Object> map);
+
 }

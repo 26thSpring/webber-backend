@@ -3,6 +3,7 @@ package com.spring.reply.controller;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.spring.reply.service.ReplyService;
 import com.spring.reply.vo.ReplyVo;
 import com.spring.result.vo.ResultMsgVo;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/reply")
 public class ReplyRestController {
@@ -23,10 +25,10 @@ public class ReplyRestController {
 	private ReplyService replyService;
 	
 	//선택한 댓글을 가져온다.
-	@RequestMapping(value="/{board_id}/{reply_id}",method=RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public ReplyVo getReplyVo(@PathVariable("board_id") String board_id,@PathVariable("reply_id") String reply_id,@RequestBody HashMap<String,Object>map) {
-		map.put("board_id", board_id);
+	@RequestMapping(value="/{reply_id}",method=RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public ReplyVo getReplyVo(@PathVariable("reply_id") String reply_id,@RequestParam HashMap<String,Object>map) {
 		map.put("reply_id", reply_id);
+		System.out.println("여기로 들어와야하는데"+map);
 		ReplyVo replyVo=replyService.getReplyVo(map);
 		if(replyVo==null) {
 			throw new NotExsistExcpetion("Not Exist/-7");
@@ -36,7 +38,7 @@ public class ReplyRestController {
 	
 	//댓글을 생성한다.
 	@RequestMapping(method=RequestMethod.POST,produces = "application/json; charset=utf-8")
-	public ResultMsgVo insertReply(@RequestBody HashMap<String,Object>map) {
+	public ResultMsgVo insertReply(@RequestParam HashMap<String,Object>map) {
 		replyService.insertReply(map);
 		if(map.get("err_code")!=null) {
 			if(map.get("err_code").equals("-47474447")) {
@@ -48,8 +50,9 @@ public class ReplyRestController {
 	}
 	
 	//댓글을 수정한다.
-	@RequestMapping(method=RequestMethod.PUT,produces = "application/json; charset=utf-8")
-	public ResultMsgVo modifyReply(@RequestBody HashMap<String,Object>map) {
+	@RequestMapping(value="/{reply_id}",method=RequestMethod.PUT,produces = "application/json; charset=utf-8")
+	public ResultMsgVo modifyReply(@PathVariable("reply_id")String reply_id,@RequestBody HashMap<String,Object>map) {
+		map.put("reply_id", reply_id);
 		replyService.updateReply(map);
 		if(map.get("err_code")!=null) {
 			if(map.get("err_code").equals("-47474447")) {
@@ -61,8 +64,13 @@ public class ReplyRestController {
 	}
 	
 	//댓글을 삭제한다.
-	@RequestMapping(method=RequestMethod.DELETE,produces = "application/json; charset=utf-8")
-	public ResultMsgVo deleteReply(@RequestBody HashMap<String,Object>map) {
+	@RequestMapping(value="/{reply_id}",method=RequestMethod.DELETE,produces = "application/json; charset=utf-8")
+	public ResultMsgVo deleteReply(@PathVariable("reply_id")String reply_id,@RequestBody String token) {
+		
+		HashMap<String,Object> map=new HashMap<String,Object>();
+		map.put("reply_id", reply_id);
+		map.put("access_token",token);
+		System.out.println("여기로 들어온다."+map);
 		replyService.deleteReply(map);
 		if(map.get("err_code")!=null) {
 			if(map.get("err_code").equals("-47474447")) {

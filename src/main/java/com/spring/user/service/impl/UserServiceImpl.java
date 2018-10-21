@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
 				userVo.setNickname(uservo.getNickname());
 				userVo.setThumbnail(uservo.getThumbnail());
 				userVo.setSocialType(uservo.getSocialType());
+				userVo.setIntro(uservo.getIntro());
 				String token=tokenService.createToken(userVo);
 				map.put("token", token);
 				return userVo;

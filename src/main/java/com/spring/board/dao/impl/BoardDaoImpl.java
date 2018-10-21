@@ -21,9 +21,9 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<BoardVo> getBoardVo(HashMap<String, Object> map) {
 		sqlSession.selectList("Board.BoardVo", map);
-		List<BoardVo>boardList=(List<BoardVo>) map.get("result");
+		//List<BoardVo>boardList=(List<BoardVo>) map.get("result");
 
-		return boardList;
+		return (List<BoardVo>) map.get("result");
 	}
 	@Override
 	public void insertBoard(HashMap<String, Object> map) {

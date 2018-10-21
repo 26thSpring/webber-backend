@@ -239,5 +239,10 @@ public class TemplateServiceImpl implements TemplateService {
 		templateDao.indelFavor(map);
 		
 	}
+	@Override
+	public List<TemplateVo> getCheckUserTemplate(HashMap<String, Object> map) {
+		List<TemplateVo> list=templateDao.getCheckUserTemplate(map);
+		return list;
+	}
 
 }

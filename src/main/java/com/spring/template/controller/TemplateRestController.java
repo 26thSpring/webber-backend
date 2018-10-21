@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ import com.spring.result.vo.ResultMsgVo;
 import com.spring.template.service.TemplateService;
 import com.spring.template.vo.TemplateVo;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/template")
 public class TemplateRestController {
@@ -42,7 +44,8 @@ public class TemplateRestController {
 	
 	//모든 템플릿 가져오기
 	@RequestMapping(method=RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public List<TemplateVo> getList(@RequestBody HashMap<String,Object> map){
+	public List<TemplateVo> getList(HashMap<String,Object> map){
+		System.out.println("skfjskdfjsldkfjds");
 		List<TemplateVo> templateList=templateService.getList(map);
 		if(templateList.size()==0) {
 			throw new NotExsistExcpetion("Not Exsist/-3");

@@ -54,4 +54,12 @@ public class TemplateDaoImpl implements TemplateDao {
 		sqlSession.insert("Template.TemplateFavor",map);
 	}
 
+	@Override
+	public List<TemplateVo> getCheckUserTemplate(HashMap<String, Object> map) {
+		sqlSession.selectList("Template.UserTemplateVo",map);
+		System.out.println("나온 "+map);
+		List<TemplateVo>list=(List<TemplateVo>) map.get("rrr");
+		return list;
+	}
+
 }
