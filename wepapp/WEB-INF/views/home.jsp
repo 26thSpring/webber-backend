@@ -1,164 +1,577 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	window.onload = function() {
-		  $("#editorFileUpload").on('submit',function(e){
-			  e.preventDefault();
-			  e.stopPropagation();
-			 
-			  var formData = new FormData($("#editorFileUpload")[0]);
-			  console.log(formData);
-			$.ajax({
-				//url:"/api/template/update",
-				url:"/api/user/admin01",
-				type:"POST",
-				enctype: "multipart/form-data",
-				data:formData,
-				processData : false,
-	            contentType : false,
-				success:function(data){
-					alert(data);
-					console.log(data);
-				},
-				error:function(xhr){
-					alert('error: '+xhr.status);
-					console.log(xhr);
-				}
-				
-			});
-		})
-		;  
-		
-		  $("#getUserList").click('on',function(){
-			  $.ajax({
-					url:"/api/auth/123123",
-					type:"GET",
-					success:function(data){
-						alert(data);
-						console.log(data);
-						for(i=0;i<data.length;i++){
-							var trTag=$("<tr></tr>");
-							var tdTag=$("<td></td>").append($("<a></a>").attr("href","/go/detailInfo?nickname="+data[i].nickname).html(data[i].nickname));
-							trTag.append(tdTag);
-							$("#userList").append(trTag);
-						}
-					},
-					error:function(xhr){
-						alert('error: '+xhr.status);
-						console.log(xhr);
-					}
-					
-				});
-		 
-		  });
-	/*  	 $("#editorFileUpload").ajaxForm({
-             success : function(result) {                
-                     alert(result.message);
-             },
-             error:function(){
-            	 alert(2);
-             }
-     });  */
-	}
-	
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap 4 Dashboard</title>
+    <meta name="description" content="A Bootstrap 4 admin dashboard theme that will get you started. The sidebar toggles off-canvas on smaller screens. This example also include large stat blocks, modal and cards. The top navbar is controlled by a separate hamburger toggle button." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Codeply">
 
-</script>
-</head>
-<body>
-<form  id="editorFileUpload" method="post" enctype="multipart/form-data">
-	<div>
-	    <label for="fname">이름</label>
-	        :
-	    <input type="text" name="nickname" id="fname" value="C.m.A" />
-	</div>
-	 <div>
-	    <label for="femail">이메일</label>
-	    :
-	    <input type="text" name="htmlCont" id="femail" value="" />
-	    <input type="text" name="cssCont" id="femail2" value="" />
-	    <input type="file" name="file"/>
-	</div>
-	<button>oke</button>
-</form>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<button class="button" id="getUserList"> getuser</button>
-<img src="/img/templateP/TTTTTTT/Jellyfish.jpg"/>
-<!-- <img src="/tImg/templatephoto/C.m.A/Desert.jpg" alt="사진2"/> -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body >
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
+    <div class="flex-row d-flex">
+        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" title="Free Bootstrap 4 Admin Template">Admin Template</a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="collapsingNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="//www.codeply.com">Link</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" data-target="#myModal" data-toggle="modal">About</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid" id="main">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
+            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+                <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
+                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
+                       <li class="nav-item"><a class="nav-link" href="">Report 1</a></li>
+                       <li class="nav-item"><a class="nav-link" href="">Report 2</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Snippets</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Flexbox</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Layouts</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Themes</a></li>
+            </ul>
+        </div>
+        <!--/col-->
 
-<table id="userList">
+        <div class="col main pt-5 mt-3">
+            <h1 class="display-4 d-none d-sm-block">
+            Bootstrap 4 Dashboard
+            </h1>
+            <p class="lead d-none d-sm-block">Plus off-canvas sidebar, based on Bootstrap v4</p>
 
-</table>
-<!--  <form id="fileForm" action="fileUpload" method="post"
+            <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <strong>Holy guacamole!</strong> It's free.. this is an example theme.
+            </div>
+            <div class="row mb-3">
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Users</h6>
+                            <h1 class="display-4">134</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Posts</h6>
+                            <h1 class="display-4">87</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Tweets</h6>
+                            <h1 class="display-4">125</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-share fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Shares</h6>
+                            <h1 class="display-4">36</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
 
-        enctype="multipart/form-data">
+            <hr>
+            <div class="row placeholders mb-3">
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <img src="//placehold.it/200/dddddd/fff?text=1" class="mx-auto img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Responsive</h4>
+                    <span class="text-muted">Device agnostic</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <img src="//placehold.it/200/e4e4e4/fff?text=2" class="mx-auto img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Frontend</h4>
+                    <span class="text-muted">UI / UX oriented</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <img src="//placehold.it/200/d6d6d6/fff?text=3" class="mx-auto img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>HTML5</h4>
+                    <span class="text-muted">Standards-based</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <img src="//placehold.it/200/e0e0e0/fff?text=4" class="center-block img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Framework</h4>
+                    <span class="text-muted">CSS and JavaScript</span>
+                </div>
+            </div>
 
-        <input type="file" id="fileUp" name="fileUp"/><br/><br/>
+            <a id="features"></a>
+            <hr>
+            <p class="lead mt-5">
+                Are you ready for Bootstap 4? It's the 4th generation of this popular responsive framework. Bootstrap 4 will include some interesting 
+                new features such as flexbox, 5 grid sizes (now including xl), cards, `em` sizing, CSS normalization (reboot) and larger font
+                sizes.
+            </p>
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top img-fluid" src="//placehold.it/740x180/bbb/fff?text=..." alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Layouts</h4>
+                            <p class="card-text">Flexbox provides simpler, more flexible layout options like vertical centering.</p>
+                            <a href="#" class="btn btn-primary">Button</a>
+                        </div>
+                    </div>
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Flexbox</h3>
+                            <p class="card-text">Flexbox is now the default, and Bootstrap 4 supports SASS out of the box.</p>
+                            <a href="#" class="btn btn-outline-secondary">Outline</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Label</th>
+                                    <th>Header</th>
+                                    <th>Column</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1,001</td>
+                                    <td>responsive</td>
+                                    <td>bootstrap</td>
+                                    <td>cards</td>
+                                    <td>grid</td>
+                                </tr>
+                                <tr>
+                                    <td>1,002</td>
+                                    <td>rwd</td>
+                                    <td>web designers</td>
+                                    <td>theme</td>
+                                    <td>responsive</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>free</td>
+                                    <td>open-source</td>
+                                    <td>download</td>
+                                    <td>template</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>frontend</td>
+                                    <td>developer</td>
+                                    <td>coding</td>
+                                    <td>card panel</td>
+                                </tr>
+                                <tr>
+                                    <td>1,004</td>
+                                    <td>migration</td>
+                                    <td>bootstrap 4</td>
+                                    <td>mobile-first</td>
+                                    <td>design</td>
+                                </tr>
+                                <tr>
+                                    <td>1,005</td>
+                                    <td>navbar</td>
+                                    <td>sticky</td>
+                                    <td>jumbtron</td>
+                                    <td>header</td>
+                                </tr>
+                                <tr>
+                                    <td>1,006</td>
+                                    <td>collapse</td>
+                                    <td>affix</td>
+                                    <td>submenu</td>
+                                    <td>flexbox</td>
+                                </tr>
+                                <tr>
+                                    <td>1,007</td>
+                                    <td>layout</td>
+                                    <td>examples</td>
+                                    <td>themes</td>
+                                    <td>grid</td>
+                                </tr>
+                                <tr>
+                                    <td>1,008</td>
+                                    <td>migration</td>
+                                    <td>bootstrap 4</td>
+                                    <td>flexbox</td>
+                                    <td>design</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
 
-        <input type="file" id="fileUp2" name="fileUp2"/><br/><br/>
+            <a id="more"></a>
+            <hr>
+            <h2 class="sub-header mt-5">Use card decks for equal height rows of cards</h2>
+            <div class="mb-3">
+                <div class="card-deck">
+                    <div class="card card-inverse card-success text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>It's really good news that the new Bootstrap 4 now has support for CSS 3 flexbox.</p>
+                                <footer>Makes flexible layouts <cite title="Source Title">Faster</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-danger text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>The Bootstrap 3.x element that was called "Panel" before, is now called a "Card".</p>
+                                <footer>All of this makes more <cite title="Source Title">Sense</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-warning text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>There are also some interesting new text classes for uppercase and capitalize.</p>
+                                <footer>These handy utilities make it <cite title="Source Title">Easy</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-info text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>If you want to use cool icons in Bootstrap 4, you'll have to find your own such as Font Awesome or Ionicons.</p>
+                                <footer>The Glyphicons are not <cite title="Source Title">Included</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
 
-          
+            <a id="flexbox"></a>
+            <hr>
+            <h2 class="mt-5">Masonry-style grid columns</h2>
+            <h6>with Bootstrap 4 flexbox</h6>
 
-        아이디 : <input type="text" name="id" />
+            <div class="card-columns mb-3">
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="//placehold.it/600x200/444/fff?text=..." alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">New XL Grid Tier</h4>
+                        <p class="card-text">With screens getting smaller, Bootstrap 4 introduces a new grid breakpoint with the col-xl-* classes. This extra tier extends the media query range all the way down to 576 px. Eventhough the new XL tier would make one think it’s been added to support extra large screens, it’s actually the opposite.</p>
+                    </div>
+                </div>
+                <div class="card card-body">
+                    <blockquote class="card-blockquote">
+                        <p>Bootstrap 4 will be lighter and easier to customize.</p>
+                        <footer>
+                            <small class="text-muted">
+                              Someone famous like <cite title="Source Title">Mark Otto</cite>
+                            </small>
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="//placehold.it/600x200/bbb/fff?text=..." alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                <div class="card card-body card-inverse card-primary text-center">
+                    <blockquote class="card-blockquote">
+                        <p>Create masonry or Pinterest-style card layouts in Bootstrap 4.</p>
+                        <footer>
+                            <small>
+                              Someone famous in <cite title="Source Title">Bootstrap</cite>
+                            </small>
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="card card-body text-center">
+                    <h4 class="card-title">Clever heading</h4>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 5 mins ago</small></p>
+                </div>
+                <div class="card">
+                    <img class="card-img img-fluid" src="//placehold.it/600x200/777/fff?text=..." alt="Card image">
+                </div>
+                <div class="card card-body text-right">
+                    <blockquote class="card-blockquote">
+                        <p>There are also some interesting new text classes to uppercase or capitalize.</p>
+                        <footer>
+                            <small class="text-muted">
+                              Someone famous in <cite title="Source Title">Bootstrap</cite>
+                            </small>
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="card card-body">
+                    <h4 class="card-title">Responsive</h4>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="text-capitalize"><code class="text-lowercase">text-capitalize</code> Capitalize each word</li>
+                            <li class="text-uppercase"><code class="text-lowercase">text-uppercase</code> Uppercase text</li>
+                            <li class="text-success"><code>text-success</code> Contextual colors for text</li>
+                            <li><code>text-muted</code> <span class="text-muted">Lighten with muted</span></li>
+                            <li><code>text-info</code> <span class="text-muted">Info text color</span></li>
+                            <li><code>text-danger</code> <span class="text-muted">Danger text color</span></li>
+                            <li><code>text-warning</code> <span class="text-muted">Warning text color</span></li>
+                            <li><code>text-primary</code> <span class="text-primary">Primary text color</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-body">
+                    <h4 class="card-title">Heading</h4>
+                    <p class="card-text">So now that you've seen some of what Bootstrap 4 has to offer, are you going to give it a try?</p>
+                    <p class="card-text"><small class="text-muted">Last updated 12 mins ago</small></p>
+                </div>
+            </div>
+            <!--/card-columns-->
 
-        비밀번호 : <input type="password" name="pw" /><br/><br/>
+            <a id="layouts"></a>
+            <hr>
+            <h2 class="sub-header mt-5">Interesting layouts and elements</h2>
+            <div class="row mb-3">
+                <div class="col-lg-6">
 
-        <input type="button" value="전송하기" o-nClick="fileSubmit();">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Bye .well, .panel &amp; .thumbnail
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Replaced with .card</h4>
+                            <p class="card-text">All of these Bootstrap 3.x components have been dropped entirely for the new card component.</p>
+                            <button type="button" class="btn btn-secondary btn-lg">Large</button>
+                        </div>
+                    </div>
 
-    </form>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home1" role="tab" data-toggle="tab">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#profile1" role="tab" data-toggle="tab">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#messages1" role="tab" data-toggle="tab">Messages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settings1" role="tab" data-toggle="tab">Settings</a>
+                        </li>
+                    </ul>
 
- 
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <br>
+                        <div role="tabpanel" class="tab-pane active" id="home1">
+                            <h4>Home</h4>
+                            <p>
+                                1. These Bootstrap 4 Tabs work basically the same as the Bootstrap 3.x tabs.
+                                <br>
+                                <br>
+                                <button class="btn btn-primary-outline btn-lg">Wow</button>
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile1">
+                            <h4>Pro</h4>
+                            <p>
+                                2. Tabs are helpful to hide or collapse some addtional content.
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="messages1">
+                            <h4>Messages</h4>
+                            <p>
+                                3. You can really put whatever you want into the tab pane.
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="settings1">
+                            <h4>Settings</h4>
+                            <p>
+                                4. Some of the Bootstrap 3.x components like well and panel have been dropped for the new card component.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-6">
+                    <div class="card card-default card-body">
+                        <ul id="tabsJustified" class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-target="#tab1" data-toggle="tab">List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="" data-target="#tab2" data-toggle="tab">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-target="#tab3" data-toggle="tab">More</a>
+                            </li>
+                        </ul>
+                        <!--/tabs-->
+                        <br>
+                        <div id="tabsJustifiedContent" class="tab-content">
+                            <div class="tab-pane" id="tab1">
+                                <div class="list-group">
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">51</span> Home Link</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">8</span> Link 2</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">23</span> Link 3</a>
+                                    <a href="" class="list-group-item text-muted">Link n..</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane active" id="tab2">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <h4>Profile Section</h4>
+                                        <p>Imagine creating this simple user profile inside a tab card.</p>
+                                    </div>
+                                    <div class="col-sm-5"><img src="//placehold.it/170" class="float-right img-responsive img-rounded"></div>
+                                </div>
+                                <hr>
+                                <a href="javascript:;" class="btn btn-info btn-block">Read More Profiles</a>
+                                <div class="spacer5"></div>
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                <div class="list-group">
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">44</span> <code>.panel</code> is now <code>.card</code></a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">8</span> <code>.nav-justified</code> is deprecated</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">23</span> <code>.badge</code> is now <code>.label-pill</code></a>
+                                    <a href="" class="list-group-item text-muted">Message n..</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/tabs content-->
+                    </div><!--/card-->
+                </div><!--/col-->
+                <div class="col-lg-6">
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="card">
+                        <div class="card-header" role="tab" id="headingOne"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Accordion example
+                        </div>
+                        <div id="collapseOne" class="card-block collapse in" role="tabpanel" aria-labelledby="headingOne">
+                             <p>This is a Bootstrap 4 accordion that uses the <code>.card</code> classes instead of <code>.panel</code>. The single-open section aspect is not working because the parent option (dependent on .panel) has not yet been finalized in BS 4 alpha. </p>
+                        </div>
+                        <div class="card-header" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Mobile-first
+                        </div>
+                        <div id="collapseTwo" class="card-block collapse" role="tabpanel" aria-labelledby="headingTwo">
+                             <p>Just like it's predecesor, Bootstrap 4 is mobile-first so that you start by designing for smaller devices such as smartphones and tablets, then proceed to laptop and desktop layouts.</p>
+                        </div>
+                        <div class="card-header" role="tab" id="headingThree"  data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              Built for CSS3
+                        </div>
+                        <div id="collapseThree" class="card-block collapse" role="tabpanel" aria-labelledby="headingThree">
+                             <p>Bootstrap employs a handful of important global styles and settings that you’ll need to be aware of when using it, all of which are almost exclusively geared towards the normalization of cross browser styles.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="mt-4">
+                        <a href="/go/KrUO8QpyXP/bootstrao-4-dashboard" target="_ext">Get this Bootstrap 4 admin dashboard at Codeply</a>
+                    </p>
+                </div><!--/col-->
+            </div><!--/row-->
 
-<script>
+        </div>
+        <!--/main col-->
+    </div>
 
-    function fileSubmit() {
+</div>
+<!--/.container-->
+<footer class="container-fluid">
+    <p class="text-right small">©2016-2018 Company</p>
+</footer>
 
-        var formData = new FormData($("#fileForm")[0]);
 
-        console.log(formData);
-
-        alert(formData);
-
-        $.ajax({
-
-            type : 'post',
-
-            url : '/fileUpload',
-
-            data : formData,
-
-            processData : false,
-
-            contentType : false,
-
-            success : function(html) {
-
-                alert("파일 업로드하였습니다.");
-
-            },
-
-            error : function(error) {
-
-                alert("파일 업로드에 실패하였습니다.");
-
-                console.log(error);
-
-                console.log(error.status);
-
-            }
-
-        });
-
-    }
-
-</script> -->
-</body>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you can use to show content.
+                Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
+                <p>
+                    <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--scripts loaded here-->
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    
+    <script src="js/scripts.js"></script>
+  </body>
 </html>

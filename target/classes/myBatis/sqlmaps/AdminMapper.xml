@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Admin">
+	<resultMap type="com.spring.board.vo.BoardVo2" id="boardMap">
+		<result property="board_id" column="board_id" javaType="string" />
+		<result property="nickname" column="nick_name" javaType="string" />
+		<result property="title" column="title" javaType="string" />
+		<result property="content" column="content" javaType="string" />
+		<result property="views" column="views" javaType="int" />
+		<result property="regdate" column="regdate" javaType="string" />
+	</resultMap>
+
+	<resultMap type="com.spring.template.vo.TemplateVo2" id="templateMap">
+		<result property="template_id" column="TEMPLATE_ID" javaType="String" />
+		<result property="nickname" column="NICK_NAME" javaType="String" />
+		<result property="file_name" column="FILE_NAME" javaType="String" />
+		<result property="file_path_html" column="FILE_PATH_HTML" javaType="String" />
+		<result property="file_path_css" column="FILE_PATH_CSS" javaType="String" />
+		<result property="thumbnail" column="THUMBNAIL" javaType="String" />
+		<result property="views" column="views" javaType="int" />
+		<result property="regdate" column="REGDATE" javaType="String" />
+	</resultMap>
+	
+	<resultMap type="com.spring.user.vo.UserVO2" id="userMap">
+		<result property="email" column="email" javaType="string" />
+		<result property="nick_name" column="nick_name" javaType="string" />
+		<result property="thumbnail" column="thumbnail" javaType="string" />
+		<result property="intro" column="intro" javaType="string" />
+		<result property="google" column="google" javaType="string" />
+		<result property="facebook" column="facebook" javaType="string" />
+		<result property="naver" column="naver" javaType="string" />
+		<result property="delnum" column="delnum" javaType="string" />
+	</resultMap>
+	
+	<select id="getUserAll" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.user.vo.UserVO2">
+		{CALL pkg_admin.proc_get_user_all (
+			#{nowpage, mode=IN, jdbcType=INTEGER },
+	        #{pagecount, mode=IN, jdbcType=INTEGER },
+	        #{totalcount, mode=OUT, jdbcType=INTEGER },  
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=userMap}
+		)}
+	</select>
+
+	<select id="getUser" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.user.vo.UserVO2">
+		{CALL pkg_admin.proc_get_user (
+			#{nick_name, mode=IN, jdbcType=VARCHAR},
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=userMap}
+		)}
+	</select>
+
+	<delete id="delUser" statementType="CALLABLE"
+		parameterType="hashmap">
+		{CALL pkg_admin.proc_del_user (
+			#{nick_name, mode=IN, jdbcType=VARCHAR}
+		)}
+	</delete>
+
+	<select id="BoardList" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.board.vo.BoardVo2">
+		{Call pkg_admin.proc_board_list (
+			#{nowpage, mode=IN, jdbcType=INTEGER },
+	        #{pagecount, mode=IN, jdbcType=INTEGER },
+	        #{totalcount, mode=OUT, jdbcType=INTEGER },  
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=boardMap}
+		)}
+	</select>
+
+	<delete id="BoardDelete" statementType="CALLABLE">
+		{call pkg_admin.proc_del_board (
+			#{board_id, mode=IN, jdbcType=VARCHAR }
+		)}
+	</delete>
+	
+	<select id="boardView" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.board.vo.BoardVo2">
+		{call pkg_admin.proc_board_content (
+			#{board_id, mode=IN, jdbcType=VARCHAR },
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=boardMap}
+		)}
+	</select>
+
+	<select id="notice" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.board.vo.BoardVo2">
+		{call pkg_admin.proc_get_notice_all (
+			#{nowpage, mode=IN, jdbcType=INTEGER },
+	        #{pagecount, mode=IN, jdbcType=INTEGER },
+	        #{totalcount, mode=OUT, jdbcType=INTEGER },  
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=boardMap}
+		)}
+	</select>
+	
+	<select id="noticeView" statementType="CALLABLE"
+		parameterType="hashmap" resultType="com.spring.board.vo.BoardVo2">
+		{ call pkg_admin.proc_get_notice (
+			#{board_id, mode=IN, jdbcType=VARCHAR },
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=boardMap}
+		)}
+	</select>
+
+	<insert id="noticeWrite" statementType="CALLABLE"
+		parameterType="hashmap">
+		{CALL pkg_admin.proc_write_notice(
+			#{nickname,mode=IN,jdbcType=VARCHAR},
+			#{title,mode=IN,jdbcType=VARCHAR},
+			#{content,mode=IN,jdbcType=VARCHAR}
+		)}
+	</insert>
+	
+	<update id="noticeUpdate" statementType="CALLABLE" parameterType="hashmap">
+		{call pkg_admin.proc_update_notice (
+			#{board_id, mode=IN, jdbcType=VARCHAR},
+			#{title, mode=IN, jdbcType=VARCHAR},
+			#{content, mode=IN, jdbcType=VARCHAR}
+		)}
+	</update>
+
+	<delete id="noticeDelete" statementType="CALLABLE">
+		{call pkg_admin.proc_delete_notice (
+			#{board_id, mode=IN, jdbcType=VARCHAR }
+		)}
+	</delete>
+
+	<select id="templateAll" statementType="CALLABLE" parameterType="hashmap" resultType="com.spring.template.vo.TemplateVo2">
+		{call pkg_admin.proc_get_template_all (
+			#{nowpage, mode=IN, jdbcType=INTEGER },
+	        #{pagecount, mode=IN, jdbcType=INTEGER },
+	        #{totalcount, mode=OUT, jdbcType=INTEGER }, 
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=templateMap}
+		)}
+	</select>
+	
+	<select id="templateView" statementType="CALLABLE" parameterType="hashmap" resultType="com.spring.template.vo.TemplateVo2" >
+		{call pkg_admin.proc_template_view (
+			#{template_id, mode=IN, jdbcType=VARCHAR},
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=templateMap}
+		)}
+	</select>
+
+	<delete id="templateDelete" statementType="CALLABLE">
+		{call pkg_admin.proc_delete_template (
+			#{template_id, mode=IN, jdbcType=VARCHAR }
+		)}
+	</delete>
+	
+</mapper>	

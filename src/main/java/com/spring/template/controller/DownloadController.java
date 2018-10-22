@@ -26,7 +26,7 @@ import com.spring.template.vo.TemplateVo;
 public class DownloadController {
 	@Autowired
 	private TemplateService templateService;
-	@RequestMapping(value="/api/template/{template_id}")
+	@RequestMapping(value="/api/template/file/{template_id}")
 	public void downloadFileHTML( HttpServletResponse response
 			,@PathVariable("template_id") String template_id) throws Exception{
 		HashMap<String,Object> map=new HashMap<String,Object>();
@@ -53,35 +53,7 @@ public class DownloadController {
 	 
 	 
 	}
-//	@RequestMapping(value="/api/template/css/{template_id}")
-//	public void downloadFileCss( HttpServletResponse response
-//			,@PathVariable("template_id") String template_id) throws Exception{
-//		HashMap map=new HashMap<String,Object>();
-//		map.put("board_id", template_id);
-//		TemplateVo tvo=templateService.getTemplateVo(map);
-//		String fileName=tvo.getFile_name();
-//		String fileNameCss=fileName.substring(0,fileName.lastIndexOf("."));
-//		fileNameCss+=".css";
-//		
-//		
-//		String originalFileName = tvo.getFile_path_css();
-//		
-//		
-//		byte fileByte[] = FileUtils.readFileToByteArray(new File(originalFileName));
-//		
-//		response.setContentType("application/octet-stream");
-//		response.setContentLength(fileByte.length);
-//		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileNameCss,"UTF-8")+"\";");
-//		response.setHeader("Content-Transfer-Encoding", "binary");
-//		response.getOutputStream().write(fileByte);
-//		
-//		response.getOutputStream().flush();
-//		response.getOutputStream().close();
-//		
-//		
-//		
-//		
-//	}
+
 
 
 }
