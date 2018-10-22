@@ -88,12 +88,13 @@ public class TemplateServiceImpl implements TemplateService {
 		
 		String htmlCont=(String) map.get("htmlCont");
 		 	
+		String photo = (String) map.get("photo");
 		
 		String cssCont=(String) map.get("cssCont"); 
 		
 		
 		//img파일 저장 위치
-		String filePath="D:\\wsspring02\\WebberPrj\\wepapp\\WEB-INF\\resources\\img\\templateP\\";
+		String filePath="C:\\Users\\hrd202-24\\Desktop\\WebberPrj\\wepapp\\WEB-INF\\resources\\img\\templateP\\";
 			   filePath+=nickName;
 			   
 	    File file=new File(filePath);
@@ -102,7 +103,7 @@ public class TemplateServiceImpl implements TemplateService {
 	    }
 	    
 	    System.out.println("파일 생성");
-	    String sFileName=uif.uploadImg(req, filePath);
+	    String sFileName=uif.uploadImg(photo, filePath, nickName);
 		map.put("thumbnail", "/img/templateP/"+nickName+"/"+sFileName);
 		// /tImg/="d:\\uploadFile 경로"
 		filePath ="D:\\uploadFile";
@@ -126,12 +127,12 @@ public class TemplateServiceImpl implements TemplateService {
 		String filePathHtml=filePath+"\\"+nickName+".html";
 		String filePathCss =filePath+"\\"+nickName+".css";
 		String htmlPath=ulf.makeFileName(filePathHtml, htmlCont, ".html");		
-		String cssPath=ulf.makeFileName(filePathCss, cssCont, ".css");		
+		//String cssPath=ulf.makeFileName(filePathCss, cssCont, ".css");		
 		
 		System.out.println("파일이름: "+filePathHtml.substring(filePathLen+1));
 		map.put("fileName", htmlPath.substring(filePathLen+1));
 		map.put("filePathHTML", htmlPath);
-		map.put("filePathCSS", cssPath);
+		map.put("filePathCSS", null);
 		
 		//System.out.println("현재 만들어진 어쩌구 저쩌구"+map);
 		templateDao.insertTemplate(map);

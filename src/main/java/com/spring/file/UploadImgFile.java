@@ -1,20 +1,36 @@
 package com.spring.file;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.OutputStream;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 public class UploadImgFile {
 
 
-	public String uploadImg(HttpServletRequest req, String filePathImg) {
-		File file=null;
+	public String uploadImg(String photo, String filePathImg,String nickname) {
+		String[] photos=photo.split(",");
+		String imgString=photos[1];
+		System.out.println("이미지 자른거::" + imgString);
+		CheckFileName checkFile=new CheckFileName();
+		
+		String fileName=checkFile.getCheckFileName(filePathImg, nickname,".png");
+		System.out.println("저장될 파일이름"+fileName);
+		filePathImg+="\\"+fileName;
+			byte[] imageBytes = DatatypeConverter.parseBase64Binary(imgString);
+			
+			
+
+			 File file = new File(filePathImg);
+		        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+		            outputStream.write(imageBytes);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		/*File file=null;
 		MultipartHttpServletRequest mhsr=(MultipartHttpServletRequest) req;
 		Iterator<String> iterator=mhsr.getFileNames();//Iterator 갯수 체크
 		MultipartFile mf=null; 
@@ -53,7 +69,7 @@ public class UploadImgFile {
 						}
 					}
 					
-				}
-		return sFileName;
+				}*/
+		return fileName;
 	}
 }

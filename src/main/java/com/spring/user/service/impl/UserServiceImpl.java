@@ -109,12 +109,12 @@ public class UserServiceImpl implements UserService {
 			                
 					}
 					
-						sFileName=uif.uploadImg(req, filePath);				
+						//sFileName=uif.uploadImg(req, filePath);				
 						System.out.println("파일 생성");					
 					
 			}else {
 				file.mkdirs();
-				sFileName=uif.uploadImg(req, filePath);					
+				//sFileName=uif.uploadImg(req, filePath);					
 			}
 
 	    if(sFileName!=null) {

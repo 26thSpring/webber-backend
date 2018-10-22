@@ -14,7 +14,7 @@ public class CheckFileName {
 		int fileLen=orgFileName.length();
 		int i=0;
 		while(isCheck) {
-			fullFilePath =filePath+orgFileName+fileExt;
+			fullFilePath =filePath+"\\"+orgFileName+fileExt;
 			file 		 =new File(fullFilePath);
 			if(file.exists()) {
 				i++;
