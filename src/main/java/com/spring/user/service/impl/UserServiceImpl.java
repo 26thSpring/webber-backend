@@ -2,28 +2,16 @@ package com.spring.user.service.impl;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.util.WebUtils;
 
-import com.spring.cookie.MakeCookie;
-import com.spring.error.NotExsistExcpetion;
-import com.spring.error.OracleError;
-import com.spring.file.UploadImgFile;
-import com.spring.session.MakeSession;
+import com.spring.file.UploadImgFile2;
 import com.spring.token.service.TokenService;
 import com.spring.user.dao.UserDao;
 import com.spring.user.service.UserService;
@@ -82,11 +70,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateInfo(HashMap<String, Object> map, HttpServletRequest req,HttpServletResponse resp) {
-		UploadImgFile uif=new UploadImgFile();
+		UploadImgFile2 uif=new UploadImgFile2();
 		
 		String nickName=(String) map.get("nickname");
 		
-		String filePath="D:\\wsspring02\\WebberPrj\\wepapp\\WEB-INF\\resources\\img\\profileP\\";
+		String filePath="C:\\Users\\foels\\Documents\\webber-back\\wepapp\\WEB-INF\\resources\\img\\profileP\\";
 		filePath+=nickName;
 		
 	
@@ -109,12 +97,12 @@ public class UserServiceImpl implements UserService {
 			                
 					}
 					
-						//sFileName=uif.uploadImg(req, filePath);				
+						sFileName=uif.uploadImg(req, filePath);				
 						System.out.println("파일 생성");					
 					
 			}else {
 				file.mkdirs();
-				//sFileName=uif.uploadImg(req, filePath);					
+			sFileName=uif.uploadImg(req, filePath);					
 			}
 
 	    if(sFileName!=null) {

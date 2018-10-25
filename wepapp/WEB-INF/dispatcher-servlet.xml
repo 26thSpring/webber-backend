@@ -48,9 +48,9 @@
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 	destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@210.119.12.234:1521:xe"/>
-		<property name="username" value="chanse"/>
-		<property name="password" value="1234"/>		
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="webber"/>
+		<property name="password" value="123123"/>		
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

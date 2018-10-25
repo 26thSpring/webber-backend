@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.file.CheckFileName;
 import com.spring.file.ImgFileModify;
-import com.spring.file.ReadFile;
+//import com.spring.file.ReadFile;
 import com.spring.file.UploadFile;
 import com.spring.file.UploadImgFile;
 import com.spring.template.dao.TemplateDao;
@@ -42,13 +42,13 @@ public class TemplateServiceImpl implements TemplateService {
 	public TemplateVo getTemplateVo(HashMap<String, Object> map) {
 		List<TemplateVo> templateList=templateDao.getTemplateVoList(map);
 		TemplateVo tVo=templateList.get(0);
-		ReadFile rf=new ReadFile();
+		//ReadFile rf=new ReadFile();
 		//Html내용 갖고와서 Vo에 넣음
-		String htmlContents=rf.readFile(tVo.getFile_path_html());
-		tVo.setHtmlContent(htmlContents);
+		//String htmlContents=rf.readFile(tVo.getFile_path_html());
+		//tVo.setHtmlContent(htmlContents);
 		//Css 내용 갖고와서 Vo에 넣음
-		String cssContents=rf.readFile(tVo.getFile_path_css());
-		tVo.setCssContent(cssContents);
+		//String cssContents=rf.readFile(tVo.getFile_path_css());
+		//tVo.setCssContent(cssContents);
 		if(templateList.size()==0) {
 			return null;
 		}
@@ -94,7 +94,7 @@ public class TemplateServiceImpl implements TemplateService {
 		
 		
 		//img파일 저장 위치
-		String filePath="C:\\Users\\hrd202-24\\Desktop\\WebberPrj\\wepapp\\WEB-INF\\resources\\img\\templateP\\";
+		String filePath="C:\\Users\\foels\\Documents\\webber-back\\wepapp\\WEB-INF\\resources\\img\\templateP\\";
 			   filePath+=nickName;
 			   
 	    File file=new File(filePath);

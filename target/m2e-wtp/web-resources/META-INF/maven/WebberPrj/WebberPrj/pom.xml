@@ -19,9 +19,9 @@
 		<dependency>
 			<groupId>org.springframeworK</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.18.RELEASE</version>
+			<version>4.2.6.RELEASE</version>
 		</dependency>
-
+		
 
 
 		<!-- ojdbc6.jar -->
